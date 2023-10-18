@@ -7,14 +7,18 @@ interface ConfirmationProps {
 }
 
 const Confirmation: React.FC<ConfirmationProps> = ({ hash }) => {
-  const { data, isError, isLoading } = useWaitForTransaction({
+  const { data, isError, error, isLoading } = useWaitForTransaction({
     hash,
     confirmations: 6
   })
 
-  if (isLoading) return <div>Waiting for confirmation…</div>
-  if (isError) return <div>Transaction error</div>
-  return <VerifyTransaction hash={data?.transactionHash} />
+  if (isError && error) {
+    return <div>Transaction error {error.toString()}</div>
+  } else if (isLoading) {
+    return <div>Waiting for confirmation…</div>
+  } else {
+    return <VerifyTransaction hash={data?.transactionHash} />
+  }
 }
 
 export default Confirmation

@@ -5,11 +5,9 @@ import { parseEther } from "viem"
 import { useContractWrite } from "wagmi"
 import Confirmation from "./Confirmation"
 
-interface WalletProps {
-  refetchBalance?: () => void
-}
+interface WalletProps {}
 
-const Wallet: React.FC<WalletProps> = ({ refetchBalance }) => {
+const Wallet: React.FC<WalletProps> = ({}) => {
   const [amount, setAmount] = useState(0)
 
   const { data: canisterDepositAddress, call } =
@@ -19,17 +17,12 @@ const Wallet: React.FC<WalletProps> = ({ refetchBalance }) => {
     call()
   }, [])
 
-  console.log(canisterDepositAddress)
-
-  const { data, isLoading, isSuccess, write } = useContractWrite({
+  const { data, isLoading, write } = useContractWrite({
     address: "0xb44B5e756A894775FC32EDdf3314Bb1B1944dC34",
     abi: helperAbi,
     functionName: "deposit",
     value: parseEther(amount.toString()),
-    args: [canisterDepositAddress],
-    onSuccess: () => {
-      if (refetchBalance) refetchBalance()
-    }
+    args: [canisterDepositAddress]
   })
 
   const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,27 +32,26 @@ const Wallet: React.FC<WalletProps> = ({ refetchBalance }) => {
     setAmount(amount)
   }
 
-  return (
-    <div>
-      <input type="number" value={amount} onChange={changeHandler} />
-      <button
-        onClick={() =>
-          write({
-            args: [canisterDepositAddress]
-          })
-        }
-      >
-        Deposit
-      </button>
-      {data?.hash ? (
-        <Confirmation hash={data.hash} />
-      ) : isLoading ? (
-        "Loading..."
-      ) : isSuccess ? (
-        "Success"
-      ) : null}
-    </div>
-  )
+  if (isLoading) {
+    return <div>Loading...</div>
+  } else if (data?.hash) {
+    return <Confirmation hash={data.hash} />
+  } else {
+    return (
+      <div>
+        <input type="number" value={amount} onChange={changeHandler} />
+        <button
+          onClick={() =>
+            write({
+              args: [canisterDepositAddress]
+            })
+          }
+        >
+          Deposit
+        </button>
+      </div>
+    )
+  }
 }
 
 export default Wallet

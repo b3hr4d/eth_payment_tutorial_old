@@ -1,15 +1,12 @@
-import { formatEther } from "viem"
-import { useAccount, useBalance, useConnect, useDisconnect } from "wagmi"
+import { useAccount, useConnect, useDisconnect } from "wagmi"
 import { MetaMaskConnector } from "wagmi/connectors/metaMask"
+import styles from "../styles/Wallet.module.css"
 import Deposit from "./Deposit"
 
 interface WalletProps {}
 
 const Wallet: React.FC<WalletProps> = ({}) => {
   const { address } = useAccount()
-  const { data, isLoading, refetch } = useBalance({
-    address
-  })
 
   const { connect } = useConnect({
     connector: new MetaMaskConnector()
@@ -17,20 +14,14 @@ const Wallet: React.FC<WalletProps> = ({}) => {
 
   const { disconnect } = useDisconnect()
 
-  console.log(data)
-
   if (address)
     return (
-      <div>
-        Connected to {address}
+      <main className={styles.main}>
+        Connected to: {address}
         <br />
-        {isLoading ? "Loading..." : null}
-        {data ? `Balance: ${formatEther(data.value)}` : null}
-        <button onClick={() => refetch()}>Refresh</button>
-        <br />
-        <Deposit refetchBalance={refetch} />
+        <Deposit />
         <button onClick={() => disconnect()}>Disconnect</button>
-      </div>
+      </main>
     )
   return <button onClick={() => connect()}>Connect Wallet</button>
 }

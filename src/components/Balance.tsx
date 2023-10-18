@@ -11,9 +11,11 @@ const Balance: React.FC<BalanceProps> = ({}) => {
     call()
   }, [])
 
+  console.log(data, loading, error)
+
   if (loading) return <div>Fething balance…</div>
   if (error) return <div>{error.toString()}</div>
-  return data ? <div>Balance: {formatEther(data)}</div> : null
+  return data ? <div>Canister CkEth Balance: {formatEther(data)}</div> : null
 }
 
 export default Balance

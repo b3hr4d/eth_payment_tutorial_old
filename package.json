@@ -1,6 +1,6 @@
 {
   "name": "ic-rust-nextjs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "b3hr4d <b3hr4d@live.com>",
   "description": "Internet Computer Rust + NextJS Template",
   "keywords": [
@@ -12,18 +12,16 @@
     "dfinity"
   ],
   "scripts": {
+    "install:all": "npm run ic-wasm:install && npm run candid:install && npm install",
     "candid:install": "cargo install candid-extractor",
-    "candid:build": "sh ./predeploy.sh",
-    "wasm:install": "cargo install ic-wasm",
-    "wasm:build": "sh ./predeploy.sh",
+    "ic-wasm:install": "cargo install ic-wasm",
     "build": "next build",
     "start": "next start",
     "export": "next build",
     "dev": "next dev",
     "dfx:start": "dfx start --background --clean",
     "dfx:stop": "dfx stop",
-    "dfx:deploy": "dfx deploy",
-    "dfx:build": "dfx build",
+    "dfx:build": "sh ./predeploy.sh && dfx build",
     "predeploy": "sh ./predeploy.sh",
     "deploy": "dfx deploy",
     "generate": "dfx generate"

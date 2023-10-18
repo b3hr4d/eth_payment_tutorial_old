@@ -15,14 +15,20 @@ const VerifyTransaction: React.FC<VerifyTransactionProps> = ({ hash }) => {
     call(hash)
   }, [hash])
 
-  if (loading) return <div>Processing…</div>
-  if (error) return <div>{error.toString()}</div>
-  return data ? (
-    <div>
-      Transaction: {hash} with {formatEther(data[0])} from {data[1]} is
-      confirmed on Ethereum.
-    </div>
-  ) : null
+  if (loading) {
+    return <div>Processing…</div>
+  } else if (error) {
+    return <div>{error.toString()}</div>
+  } else if (data) {
+    return (
+      <div>
+        Transaction: {hash} with {formatEther(data[0])}ETH from {data[1]} is
+        confirmed on-chain.
+      </div>
+    )
+  } else {
+    return null
+  }
 }
 
 export default VerifyTransaction
