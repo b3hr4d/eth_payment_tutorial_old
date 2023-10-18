@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { useActorMethod } from "service/hello"
 import helperAbi from "service/helper-abi"
+import { useActorMethod } from "service/payment"
 import { parseEther } from "viem"
 import { useContractWrite } from "wagmi"
 import Confirmation from "./Confirmation"

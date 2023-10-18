@@ -24,7 +24,7 @@ async fn balance() -> Nat {
 }
 
 #[ic_cdk::update]
-async fn eth_get_transaction_by_hash(hash: String) -> Result<Vec<u8>, String> {
+async fn eth_get_transaction_by_hash(hash: String) -> Result<transaction::Root, String> {
     if hash.len() != 66 && !hash.starts_with("0x") {
         return Err(format!("Invalid hash: {}", hash));
     }
@@ -50,7 +50,10 @@ async fn eth_get_transaction_by_hash(hash: String) -> Result<Vec<u8>, String> {
                 return Err(format!("Error: {}", response.status));
             }
 
-            Ok(response.body)
+            let trasnaction = serde_json::from_slice::<transaction::Root>(&response.body)
+                .map_err(|e| format!("Error: {}", e.to_string()))?;
+
+            Ok(trasnaction)
         }
         Err(m) => Err(format!("Error: {}", m)),
     }
@@ -60,24 +63,21 @@ async fn eth_get_transaction_by_hash(hash: String) -> Result<Vec<u8>, String> {
 async fn verify_transaction(hash: String) -> (Nat, String) {
     let tx = eth_get_transaction_by_hash(hash).await.unwrap();
 
-    let transaction = serde_json::from_slice::<transaction::Root>(&tx).unwrap();
-
-    // If necessary, decode and verify the argument passed to the function
     let expected_argument_hex = expected_input();
 
-    if transaction.result.input != expected_argument_hex {
+    if tx.result.input != expected_argument_hex {
         panic!(
             "Invalid argument: expected {}, got {}",
-            expected_argument_hex, transaction.result.input
+            expected_argument_hex, tx.result.input
         )
     }
 
-    let amount: Nat = match hex_string_with_0x_to_u64(transaction.result.value) {
+    let amount: Nat = match hex_string_with_0x_to_u64(tx.result.value) {
         Ok(amount) => amount.into(),
         Err(m) => panic!("{}", m.to_string()),
     };
 
-    let recipient = transaction.result.to;
+    let recipient = tx.result.from;
 
     (amount, recipient)
 }

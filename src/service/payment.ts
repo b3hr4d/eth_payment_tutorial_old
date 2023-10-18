@@ -1,5 +1,5 @@
 import createReActor from "@re-actor/core"
-import { canisterId, createActor } from "declarations/hello"
+import { canisterId, createActor } from "declarations/payment"
 
 export const {
   ReActorProvider,

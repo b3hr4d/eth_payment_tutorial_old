@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useActorMethod } from "service/hello"
+import { useActorMethod } from "service/payment"
 import { formatEther } from "viem"
 
 interface VerifyTransactionProps {
@@ -22,8 +22,8 @@ const VerifyTransaction: React.FC<VerifyTransactionProps> = ({ hash }) => {
   } else if (data) {
     return (
       <div>
-        Transaction: {hash} with {formatEther(data[0])}ETH from {data[1]} is
-        confirmed on-chain.
+        Transaction(<b>{hash}</b>) with <b>{formatEther(data[0])}</b>ETH from{" "}
+        <b>{data[1]}</b> is confirmed on-chain.
       </div>
     )
   } else {

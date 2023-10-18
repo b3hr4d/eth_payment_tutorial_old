@@ -295,18 +295,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8a9ee70c43aaf417c914396645a0fa852624801b24ebb7ae78fe8272889ac888"
 
 [[package]]
-name = "hello"
-version = "0.1.0"
-dependencies = [
- "b3_utils",
- "candid",
- "ic-cdk",
- "serde",
- "serde_derive",
- "serde_json",
-]
-
-[[package]]
 name = "hex"
 version = "0.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -493,6 +481,18 @@ name = "paste"
 version = "1.0.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9f746c4065a8fa3fe23974dd82f15431cc8d40779821001404d10d2e79ca7d79"
+
+[[package]]
+name = "payment"
+version = "0.1.0"
+dependencies = [
+ "b3_utils",
+ "candid",
+ "ic-cdk",
+ "serde",
+ "serde_derive",
+ "serde_json",
+]
 
 [[package]]
 name = "pretty"

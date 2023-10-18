@@ -1,8 +1,0 @@
-type Result = variant { Ok : vec nat8; Err : text };
-service : {
-  balance : () -> (nat);
-  deposit_principal : () -> (text) query;
-  eth_get_transaction_by_hash : (text) -> (Result);
-  expected_input : () -> (text) query;
-  verify_transaction : (text) -> (nat, text);
-}

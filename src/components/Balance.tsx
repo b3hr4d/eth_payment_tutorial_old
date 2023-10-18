@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useActorMethod } from "service/hello"
+import { useActorMethod } from "service/payment"
 import { formatEther } from "viem"
 
 interface BalanceProps {}
@@ -11,11 +11,9 @@ const Balance: React.FC<BalanceProps> = ({}) => {
     call()
   }, [])
 
-  console.log(data, loading, error)
-
-  if (loading) return <div>Fething balance…</div>
+  if (loading) return <div>Fetching ckETH Balance…</div>
   if (error) return <div>{error.toString()}</div>
-  return data ? <div>Canister CkEth Balance: {formatEther(data)}</div> : null
+  return data ? <div>ckETH Balance: {formatEther(data)}</div> : null
 }
 
 export default Balance
