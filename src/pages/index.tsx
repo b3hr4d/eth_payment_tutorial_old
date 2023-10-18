@@ -1,10 +1,8 @@
-import Head from "next/head"
-
-import styles from "styles/Home.module.css"
-
+import Balance from "components/Balance"
 import Wallet from "components/Wallet"
+import Head from "next/head"
 import Image from "next/image"
-
+import styles from "styles/Home.module.css"
 import { createPublicClient, http } from "viem"
 import { WagmiConfig, createConfig, sepolia } from "wagmi"
 
@@ -31,6 +29,7 @@ function HomePage() {
         <WagmiConfig config={config}>
           <Wallet />
         </WagmiConfig>
+        <Balance />
       </main>
       <footer className={styles.footer}>
         <a

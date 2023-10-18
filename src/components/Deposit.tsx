@@ -3,7 +3,7 @@ import { useActorMethod } from "service/hello"
 import helperAbi from "service/helper-abi"
 import { parseEther } from "viem"
 import { useContractWrite } from "wagmi"
-import VerifyTransaction from "./VerifyTransaction"
+import Confirmation from "./Confirmation"
 
 interface WalletProps {
   refetchBalance?: () => void
@@ -16,7 +16,7 @@ const Wallet: React.FC<WalletProps> = ({ refetchBalance }) => {
     useActorMethod("deposit_principal")
 
   useEffect(() => {
-    call("bd3sg-teaaa-aaaaa-qaaba-cai")
+    call()
   }, [])
 
   console.log(canisterDepositAddress)
@@ -52,7 +52,7 @@ const Wallet: React.FC<WalletProps> = ({ refetchBalance }) => {
         Deposit
       </button>
       {data?.hash ? (
-        <VerifyTransaction hash={data.hash} />
+        <Confirmation hash={data.hash} />
       ) : isLoading ? (
         "Loading..."
       ) : isSuccess ? (

@@ -1,18 +1,28 @@
-import { Hash } from "viem"
-import { useWaitForTransaction } from "wagmi"
+import { useEffect } from "react"
+import { useActorMethod } from "service/hello"
+import { formatEther } from "viem"
 
 interface VerifyTransactionProps {
-  hash: Hash
+  hash?: string
 }
 
 const VerifyTransaction: React.FC<VerifyTransactionProps> = ({ hash }) => {
-  const { data, isError, isLoading } = useWaitForTransaction({
-    hash
-  })
+  const { loading, error, data, call } = useActorMethod("verify_transaction")
 
-  if (isLoading) return <div>Processing…</div>
-  if (isError) return <div>Transaction error</div>
-  return <div>Transaction: {JSON.stringify(data)}</div>
+  useEffect(() => {
+    if (!hash) return
+
+    call(hash)
+  }, [hash])
+
+  if (loading) return <div>Processing…</div>
+  if (error) return <div>{error.toString()}</div>
+  return data ? (
+    <div>
+      Transaction: {hash} with {formatEther(data[0])} from {data[1]} is
+      confirmed on Ethereum.
+    </div>
+  ) : null
 }
 
 export default VerifyTransaction
