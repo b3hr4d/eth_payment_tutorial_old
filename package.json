@@ -12,7 +12,10 @@
     "dfinity"
   ],
   "scripts": {
-    "postinstall": "cargo install candid-extractor@0.1.2",
+    "candid:install": "cargo install candid-extractor",
+    "candid:build": "sh ./predeploy.sh",
+    "wasm:install": "cargo install ic-wasm",
+    "wasm:build": "sh ./predeploy.sh",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -21,6 +24,7 @@
     "dev": "next dev",
     "dfx:start": "dfx start --background --clean",
     "dfx:stop": "dfx stop",
+    "dfx:deploy": "dfx deploy",
     "dfx:build": "dfx build",
     "predeploy": "sh ./predeploy.sh",
     "deploy": "dfx deploy",
@@ -37,9 +41,10 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "@re-actor/core": "0.0.1-alpha.0",
+    "@re-actor/core": "^0.0.6",
     "next": "^13.5",
     "react": "^18.2",
-    "react-dom": "^18.2"
+    "react-dom": "^18.2",
+    "wagmi": "^1.4.4"
   }
 }

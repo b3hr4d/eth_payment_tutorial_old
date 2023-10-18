@@ -2,8 +2,19 @@ import Head from "next/head"
 
 import styles from "styles/Home.module.css"
 
-import Greeting from "components/Greeting"
+import Wallet from "components/Wallet"
 import Image from "next/image"
+
+import { createPublicClient, http } from "viem"
+import { WagmiConfig, createConfig, mainnet } from "wagmi"
+
+const config = createConfig({
+  autoConnect: true,
+  publicClient: createPublicClient({
+    chain: mainnet,
+    transport: http()
+  })
+})
 
 function HomePage() {
   return (
@@ -15,7 +26,9 @@ function HomePage() {
         <h3 className={styles.title}>
           Welcome to the Internet Computer starter template
         </h3>
-        <Greeting />
+        <WagmiConfig config={config}>
+          <Wallet />
+        </WagmiConfig>
       </main>
       <footer className={styles.footer}>
         <a

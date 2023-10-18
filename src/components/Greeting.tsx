@@ -4,7 +4,7 @@ import { useActorMethod } from "service/hello"
 interface GreetingProps {}
 
 const Greeting: React.FC<GreetingProps> = ({}) => {
-  const { call, data, error, loading } = useActorMethod("greet")
+  const { call, data, error, loading } = useActorMethod("deposit_principal")
 
   const [name, setName] = useState("")
 
