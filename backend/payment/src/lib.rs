@@ -6,7 +6,7 @@ use b3_utils::{
     outcall::HttpOutcallResponse,
     vec_to_hex_string_with_0x, Subaccount,
 };
-use candid::Nat;
+use candid::{Nat, Principal};
 use serde_json::json;
 mod transaction;
 
@@ -83,8 +83,9 @@ async fn verify_transaction(hash: String) -> (Nat, String) {
 }
 
 #[ic_cdk::query]
-fn deposit_principal() -> String {
-    let subaccount = Subaccount::from_principal(ic_cdk::id());
+fn deposit_principal(principal: String) -> String {
+    let principal = Principal::from_text(principal).unwrap();
+    let subaccount = Subaccount::from_principal(principal);
 
     let bytes32 = subaccount.to_bytes32().unwrap();
 

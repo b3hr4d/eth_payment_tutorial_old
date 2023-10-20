@@ -23,4 +23,6 @@ out/
 # Rust build artifacts
 target/
 Cargo.lock
+package-lock.json
+
 

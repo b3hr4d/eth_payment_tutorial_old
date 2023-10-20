@@ -2,19 +2,9 @@ import Balance from "components/Balance"
 import Wallet from "components/Wallet"
 import Head from "next/head"
 import Image from "next/image"
+import { wagmiConfig } from "service/config"
 import styles from "styles/Home.module.css"
-import { createPublicClient, http } from "viem"
-import { WagmiConfig, createConfig, sepolia } from "wagmi"
-
-const config = createConfig({
-  autoConnect: true,
-  publicClient: createPublicClient({
-    chain: sepolia,
-    transport: http(
-      "https://eth-sepolia.g.alchemy.com/v2/ZpSPh3E7KZQg4mb3tN8WFXxG4Auntbxp"
-    )
-  })
-})
+import { WagmiConfig } from "wagmi"
 
 function HomePage() {
   return (
@@ -26,7 +16,7 @@ function HomePage() {
         <h3 className={styles.title}>
           Welcome to the Internet Computer starter template
         </h3>
-        <WagmiConfig config={config}>
+        <WagmiConfig config={wagmiConfig}>
           <Wallet />
         </WagmiConfig>
         <Balance />

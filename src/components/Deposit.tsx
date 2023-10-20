@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
-import helperAbi from "service/helper-abi"
+import helperAbi from "service/abi.json"
 import { useActorMethod } from "service/payment"
 import { parseEther } from "viem"
 import { useContractWrite } from "wagmi"
 import Confirmation from "./Confirmation"
 
-interface WalletProps {}
+interface DepositProps {}
 
-const Wallet: React.FC<WalletProps> = ({}) => {
+const Deposit: React.FC<DepositProps> = ({}) => {
   const [amount, setAmount] = useState(0)
 
   const { data: canisterDepositAddress, call } =
@@ -54,4 +54,4 @@ const Wallet: React.FC<WalletProps> = ({}) => {
   }
 }
 
-export default Wallet
+export default Deposit
